@@ -37,8 +37,10 @@ class DocumentTests(unittest.TestCase):
         renderer.return_value.run.assert_called_once_with()
 
     @mock.patch("document.Renderer", mock.Mock())
+    @mock.patch("os.path.isfile")
     @mock.patch("os.remove")
-    def test_remove_result_file_before_rendering_in_render(self, os_remove):
+    def test_remove_result_file_before_rendering_in_render(self, os_remove, os_isfile):
+        os_isfile.return_value = True
         doc = Document()
         doc.result_file = "test"
         doc.render()
@@ -47,19 +49,30 @@ class DocumentTests(unittest.TestCase):
 
 class MemberTests(unittest.TestCase):
 
-    def test_can_be_initialized_with_name(self):
-        member = Member(name="test")
-        self.assertEqual("test", member.name)
+    def test_can_be_initialized_with_fields(self):
+        member = Member(last_name="last", first_name="first", gender="male", marital_status="married")
+        self.assertEqual("last", member.last_name)
+        self.assertEqual("first", member.first_name)
+        self.assertEqual("male", member.gender)
+        self.assertEqual("married", member.marital_status)
+
+    def test_get_result_string(self):
+        member = Member(last_name="last", first_name="first")
+        self.assertEqual("last-first", member.result_string)
 
     @mock.patch("member.Document")
     def test_create_letter(self, doc):
         member = Member()
         member.create_letter()
-        doc.assert_called_once_with("letter", member.name, member)
+        doc.assert_called_once_with(document="letter", result=member.result_string, context={'member': member})
         doc.return_value.render.assert_called_once_with()
+
+    def test_member_title_based_on_gender(self):
+        member = Member(gender="male", marital_status="married")
+        self.assertEqual("Mr.", member.title)
 
 class FunctionalTests(unittest.TestCase):
 
     def test_render_letter(self):
-        member = Member(name="Wes")
+        member = Member(last_name="St.Clair", first_name="Wes", gender="male", marital_status="married")
         member.create_letter()

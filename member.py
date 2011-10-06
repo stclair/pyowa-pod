@@ -42,3 +42,6 @@ class Member():
 
     def create_badge2(self):
         Document(document="badge2", result=self.result_string, context={'member': self}).render()
+
+    def create_badge3(self, classes):
+        Document(document="badge3", result=self.result_string, context={'member': self, 'classes': classes}).render()

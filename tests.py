@@ -90,3 +90,14 @@ class FunctionalTests(unittest.TestCase):
         member = Member(last_name="St.Clair", first_name="Wesley", nickname="Wes", company="The IMT Group",
                         job_title="IT Manager", twitter_handle="@wes_stclair", photo="me.jpg" )
         member.create_badge2()
+
+    def test_simple_table(self):
+        table = [
+            {'time': '9:00am', 'name': 'Intro to Python', 'instructor': 'Matt Morrison'},
+            {'time': '10:30am', 'name': 'TDD for Dummies', 'instructor': 'Matt Morrison'},
+            {'time': '12pm', 'name': 'Lunch', 'instructor': None},
+            {'time': '1:30pm', 'name':"There's a 'D' in Jango", 'instructor': 'Matt Morrison'},
+        ]
+        member = Member(last_name="St.Clair", first_name="Wesley", nickname="Wes", company="The IMT Group",
+                        job_title="IT Manager", twitter_handle="@wes_stclair", photo="me.jpg" )
+        member.create_badge3(table)

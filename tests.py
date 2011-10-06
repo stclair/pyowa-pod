@@ -76,3 +76,17 @@ class FunctionalTests(unittest.TestCase):
     def test_render_letter(self):
         member = Member(last_name="St.Clair", first_name="Wes", gender="male", marital_status="married")
         member.create_letter()
+
+    def test_letter2_no_prior_conventions(self):
+        member = Member(last_name="St.Clair", first_name="Wes", gender="male", marital_status="married")
+        member.create_letter2()
+
+    def test_badge(self):
+        member = Member(last_name="St.Clair", first_name="Wesley", nickname="Wes", company="The IMT Group",
+                        job_title="IT Manager", twitter_handle="@wes_stclair" )
+        member.create_badge()
+
+    def test_badge2(self):
+        member = Member(last_name="St.Clair", first_name="Wesley", nickname="Wes", company="The IMT Group",
+                        job_title="IT Manager", twitter_handle="@wes_stclair", photo="me.jpg" )
+        member.create_badge2()
